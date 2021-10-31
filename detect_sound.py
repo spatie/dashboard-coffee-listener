@@ -59,7 +59,7 @@ class AudioHandler:
             if np.max(d) < self.DIST_THRESHOLD:
                 logger.info("coffee machine")
                 logger.info(d)
-                self.insert_row("coffee")
+                self.send_api_request()
                 time.sleep(43)
                 d = deque([500, 500, 500], 3)
                 logger.info("start listening again..")
@@ -81,42 +81,8 @@ class AudioHandler:
         return np.mean(mfcc_features, axis=1)
 
     @staticmethod
-    def insert_row(serving_type):
-        connection = None
-        cursor = None
-
-        try:
-            connection = psycopg2.connect(
-                user=os.environ["DB_USER"],
-                password=os.environ["DB_PASSWORD"],
-                host=os.environ["DB_HOST"],
-                port=os.environ["DB_PORT"],
-                database=os.environ["DB_NAME"],
-                sslmode=os.environ["DB_SSL_MODE"]
-            )
-            cursor = connection.cursor()
-
-            postgres_insert_query = f""" 
-                INSERT INTO {os.environ["DB_TABLE"]} (timestamp, office, serving_type) VALUES (%s,%s,%s)
-            """
-            record_to_insert = (str(datetime.now()), os.environ["OFFICE_NAME"], serving_type)
-            cursor.execute(postgres_insert_query, record_to_insert)
-
-            connection.commit()
-            count = cursor.rowcount
-            logger.info(
-                count,
-                f"Record inserted successfully into {os.environ['DB_TABLE']} table"
-            )
-
-        except (Exception, psycopg2.Error) as error:
-            logger.info("Failed to insert record into mobile table", error)
-        finally:
-            # closing database connection.
-            if connection:
-                cursor.close()
-                connection.close()
-                logging.info("PostgreSQL connection is closed")
+    def send_api_request():
+        logger.info("sending API request")
 
 
 if __name__ == '__main__':
