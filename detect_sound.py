@@ -5,12 +5,11 @@ from pathlib import Path
 from typing import Union
 import os
 import logging
-
+import requests
 import librosa
 import numpy as np
 import sounddevice as sd
 from scipy.spatial import distance
-import psycopg2
 
 logging.basicConfig(
     filename="coffee_machine.logs",
