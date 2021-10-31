@@ -3,7 +3,8 @@
 # TODO: Fill the variables based on your audio path / office name / PostgreSQL parameters
 export COFFEE_AUDIO_PATH=/home/pi/coffee-machine-monitoring/sounds/coffee-sound.m4a
 export SD_DEFAULT_DEVICE=2
-export API_KEY=leuven
+export API_URL=https://webhook.site/da5ad18b-3a2e-4bcd-85f2-5247a9f7e889
+export API_KEY=abc123
 
 ###############################################################
 # COMMANDS                                                    #

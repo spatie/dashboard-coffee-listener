@@ -82,7 +82,7 @@ class AudioHandler:
     @staticmethod
     def send_api_request():
         logger.info("sending API request")
-
+        requests.post(url = os.environ["API_URL"], data = {'api_key': os.environ["API_KEY"]})
 
 if __name__ == '__main__':
     AudioHandler().start_detection()
