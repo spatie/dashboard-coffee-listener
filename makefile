@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 
 # TODO: Fill the variables based on your audio path / office name / PostgreSQL parameters
-export COFFEE_AUDIO_PATH=/home/pi/coffee-machine-monitoring/sounds/coffee-sound.m4a
+export COFFEE_AUDIO_PATH=/home/pi/dashboard-coffee-listener/sounds/coffee-sound.m4a
 export SD_DEFAULT_DEVICE=2
 export API_URL=https://webhook.site/da5ad18b-3a2e-4bcd-85f2-5247a9f7e889
 export API_KEY=abc123
@@ -16,8 +16,8 @@ install: ## installing dependencies for ARM architectures for all x86 architectu
 install-arm: ## installing dependencies for ARM architectures like Raspberry Pi
 	@echo ">>> installing dependencies for ARM architectures like Raspberry Pi"
 	sudo apt install -y libatlas-base-dev libportaudio2 llvm-9 libpq5
-	LLVM_CONFIG=llvm-config-9 pip install llvmlite==0.33
-	LLVM_CONFIG=llvm-config-9 pip install -r requirements.txt
+	LLVM_CONFIG=llvm-config-9 pip3 install llvmlite==0.33
+	LLVM_CONFIG=llvm-config-9 pip3 install -r requirements.txt
 
 run: ## Start listening the environment to detect coffee sound
 	@echo ">>> generating features"
