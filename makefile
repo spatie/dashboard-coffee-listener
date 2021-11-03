@@ -1,11 +1,5 @@
 .DEFAULT_GOAL := help
 
-# TODO: Fill the variables based on your audio path / office name / PostgreSQL parameters
-export COFFEE_AUDIO_PATH=/home/pi/dashboard-coffee-listener/sounds/coffee-sound.m4a
-export SD_DEFAULT_DEVICE=2
-export API_URL=https://dashboard.spatie.be/api/coffee
-export API_KEY=
-
 ###############################################################
 # COMMANDS                                                    #
 ###############################################################

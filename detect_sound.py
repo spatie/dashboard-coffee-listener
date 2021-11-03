@@ -10,6 +10,9 @@ import librosa
 import numpy as np
 import sounddevice as sd
 from scipy.spatial import distance
+from dotenv import load_dotenv
+
+load_dotenv()
 
 logging.basicConfig(
     filename="coffee_machine.logs",
@@ -26,7 +29,7 @@ class AudioHandler:
         self.sr = 44100
         self.sec = 0.7
         self.coffee_machine_mfcc, _ = self._set_coffee_machine_features()
-        sd.default.device = os.environ["SD_DEFAULT_DEVICE"]
+        sd.default.device = os.getenv("SD_DEFAULT_DEVICE")
 
     def start_detection(self) -> None:
         """
@@ -67,7 +70,7 @@ class AudioHandler:
 
     def _set_coffee_machine_features(self) -> Union[np.array, int]:
         coffee_machine_audio, sr = librosa.load(
-            os.environ["COFFEE_AUDIO_PATH"],
+            os.getenv("COFFEE_AUDIO_PATH"),
             sr=self.sr
         )
         coffee_machine_audio = coffee_machine_audio[:int(self.sec * self.sr)]
@@ -82,7 +85,7 @@ class AudioHandler:
     @staticmethod
     def send_api_request():
         logger.info("sending API request")
-        requests.post(url = os.environ["API_URL"], data = {'api_key': os.environ["API_KEY"]})
+        requests.post(url = os.getenv("API_URL"), data = {'api_key': os.getenv("API_KEY")})
 
 if __name__ == '__main__':
     AudioHandler().start_detection()
