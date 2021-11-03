@@ -10,7 +10,7 @@ Description=Coffee machine counter
 User=pi
 # Command to execute when the service is started
 # TODO: change the path to the project directory
-WorkingDirectory= /home/pi/coffee-machine-monitoring
+WorkingDirectory= /home/pi/dashboard-coffee-listener
 ExecStart=make run
 
 # Automatically restart the service if it crashes
