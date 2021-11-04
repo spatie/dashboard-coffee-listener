@@ -1,7 +1,14 @@
-[![maintained by dataroots](https://img.shields.io/badge/maintained%20by-dataroots-%2300b189)](https://dataroots.io)
- ![](https://media-exp1.licdn.com/dms/image/C4D1BAQFJFecNiY6xNA/company-background_10000/0/1606894615032?e=1628604000&v=beta&t=hNYzs9y3EA-620Ck8ip1QaZc77eXlH1ZUl-E-sLI6wo "Logo")
+# Dashboard Coffee Listener
 
-# Fresh-Coffee-Listener
+This is a fork from [Dataroot's Fresh-Coffee-Listener repo](https://github.com/datarootsio/fresh-coffee-listener). It includes the following changes:
+
+- added python-dotenv (see `.env.example`)
+- removed the PostreSQL integration
+- added a simple API request to handle the coffee event (url in `.env`)
+
+*Below is the original readme by Dataroot.*
+
+-----------------------------------------
 
 A typical datarootsian consumes high-quality fresh coffee in their office environment. The board of dataroots had
 a very critical decision by the end of 2021-Q2 regarding coffee consumption. From now on, the total number of coffee
@@ -57,7 +64,7 @@ In this file, you need to set the correct `USER` and `WorkingDirectory`. In our 
 
 ```shell
 User=pi
-WorkingDirectory= /home/pi/coffee-machine-monitoring
+WorkingDirectory= /home/pi/dashboard-coffee-listener
 ```
 To make the app robust, we set `Restart=on-failure`. So, the service will restart if something goes wrong in the app. (E.g power outage, someone plugs out the microphone and plug in again, etc.). This service will trigger `make run`
 the command that we will cover in the following sections.
@@ -69,32 +76,6 @@ OnCalendar=Mon..Fri 07:00
 ```
 It means that the app will work every weekday at 7 AM. Each run will take 7 hours. So, the app will complete 
 listening at 7 PM.
-
-## Setup a PostgreSQL Database
-You can set up a PostgreSQL database at any remote platform like an on-prem server, cloud, etc. It is not advised to install it to
-Raspberry Pi.
-1. Install and setup a PostgreSQL server by following the [official documentation](https://www.postgresql.org/docs/current/tutorial-install.html)
-   
-2. Create a database by typing the following command to the PostgreSQL console and replace `DB_NAME` with your database name;
-   ```
-   createdb DB_NAME
-   ```
-   If you got an error, check [here](https://www.postgresql.org/docs/current/tutorial-createdb.html)
-   
-3. Create a table by running the following query in your PostgreSQL console by replacing `DB_NAME` and `TABLE_NAME` with
-your own preference;
-   ```postgresql
-   CREATE TABLE DB_NAME.TABLE_NAME (
-       "timestamp" timestamp(0) NOT NULL,
-       office varchar NOT NULL,
-       serving_type varchar NOT NULL
-   );
-   ```
-4. Create a user, password and give read/write access by replacing `DB_USER`, `DB_PASSWORD`, `DB_NAME` and `DB_TABLE`
-   ```postgresql
-   create user DB_USER with password 'DB_PASSWORD';
-   grant select, insert, update on DB_NAME.DB_TABLE to DB_USER;
-   ```
 
 ## Deploying Fresh-Coffee-Listener app
 1. **Installing dependencies**: If you are using an ARM-based device like Raspberry-Pi run 
@@ -126,13 +107,6 @@ your own preference;
       ```
    It means that our default device is `2` since the name of the external device is `USB PnP Sound Device`. So, we will 
    set it as `SD_DEFAULT_DEVICE=2` in our case.
-   - `OFFICE_NAME`: it's a string value like `Leuven office`
-   - `DB_USER`: Your PostgreSQL database username
-   - `DB_PASSWORD`: the password of the specified user
-   - `DB_HOST`: The host of the database
-   - `DB_PORT`: Port number of the database
-   - `DB_NAME`: Name of the database
-   - `DB_TABLE`: Name of the table
    
 3. **Sanity check**: Run `make run` to see if the app works as expected. You can also have a coffee to test whether it captures 
    the coffee machine sound.
