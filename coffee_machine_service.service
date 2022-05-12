@@ -13,8 +13,8 @@ User=pi
 WorkingDirectory= /home/pi/dashboard-coffee-listener
 ExecStart=make run
 
-# Automatically restart the service if it crashes
-Restart=on-failure
+# Automatically restart the service
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
